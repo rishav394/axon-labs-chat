@@ -1,9 +1,15 @@
 package io.axoniq.labs.chat.query.rooms.summary;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
+@NoArgsConstructor
 public class RoomSummary {
 
     @Id
@@ -11,8 +17,6 @@ public class RoomSummary {
     private String name;
     private int participants;
 
-    public RoomSummary() {
-    }
 
     public RoomSummary(String roomId, String name) {
         this.roomId = roomId;

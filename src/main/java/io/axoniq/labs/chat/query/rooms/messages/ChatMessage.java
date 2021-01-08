@@ -1,10 +1,15 @@
 package io.axoniq.labs.chat.query.rooms.messages;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class ChatMessage {
 
     @Id
@@ -15,9 +20,6 @@ public class ChatMessage {
     private String roomId;
     private String message;
     private String participant;
-
-    public ChatMessage() {
-    }
 
     public ChatMessage(String participant, String roomId, String message, long timestamp) {
         this.participant = participant;
