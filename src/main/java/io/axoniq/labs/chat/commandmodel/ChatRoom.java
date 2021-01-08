@@ -35,8 +35,6 @@ public class ChatRoom {
 
         if (!participants.contains(cmd.getParticipant()))
             apply(new ParticipantJoinedRoomEvent(cmd.getRoomId(), cmd.getParticipant()));
-//        else
-//            throw new IllegalStateException("Cant join the room twice");
     }
 
 
@@ -76,7 +74,4 @@ public class ChatRoom {
         log.debug("Handling {}", evt);
         this.participants.remove(evt.getParticipant());
     }
-
-
-    // TODO: This class has just been created to make the test compile. It's missing, well, everything...
 }
