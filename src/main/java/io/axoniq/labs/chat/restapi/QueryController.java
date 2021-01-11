@@ -34,13 +34,9 @@ public class QueryController {
     }
 
     @GetMapping("/rooms/{roomId}/participants")
-    public Future<List<RoomParticipant>> participantsInRoom(@PathVariable String roomId) {
-        // TODO:: Test and Ask someone. This seems wrong. RoomParticipantsQuery returns a List of RoomParticipants.
-        // Yup. String gave an error. Changed return type to RoomParticipant
-        // How to map it to string?
-        // THIS IS BROKEN
+    public Future<List<String>> participantsInRoom(@PathVariable String roomId) {
         return queryGateway.query(new RoomParticipantsQuery(roomId),
-                new MultipleInstancesResponseType<>(RoomParticipant.class));
+                new MultipleInstancesResponseType<>(String.class));
     }
 
     @GetMapping("/rooms/{roomId}/messages")
@@ -54,12 +50,10 @@ public class QueryController {
         // source:: https://github.com/mohosseini/axon-chatroom/blob/904057ebf29ae967e750905e79fa92955d68c570/src/main/java/io/axoniq/labs/chat/restapi/QueryController.java
         SubscriptionQueryResult<List<ChatMessage>, ChatMessage> res =
                 queryGateway.subscriptionQuery(new RoomMessagesQuery(roomId),
-                new MultipleInstancesResponseType<>(ChatMessage.class),
-                new InstanceResponseType<>(ChatMessage.class));
+                        new MultipleInstancesResponseType<>(ChatMessage.class),
+                        new InstanceResponseType<>(ChatMessage.class));
 
         Flux<ChatMessage> initialResult = res.initialResult().flatMapMany(Flux::fromIterable);
         return Flux.concat(initialResult, res.updates());
-
-        // TODO:: Cant test this? Does this even work?
     }
 }

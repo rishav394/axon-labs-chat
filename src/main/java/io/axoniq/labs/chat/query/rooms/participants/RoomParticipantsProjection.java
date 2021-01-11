@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @Component
 @RequiredArgsConstructor
 public class RoomParticipantsProjection {
@@ -17,8 +19,9 @@ public class RoomParticipantsProjection {
     private final RoomParticipantsRepository repository;
 
     @QueryHandler
-    public List<RoomParticipant> handle(RoomParticipantsQuery roomParticipantsQuery){
-        return repository.findRoomParticipantsByRoomId(roomParticipantsQuery.getRoomId());
+    public List<String> handle(RoomParticipantsQuery roomParticipantsQuery){
+        return repository.findRoomParticipantsByRoomId(roomParticipantsQuery.getRoomId())
+                .stream().map(RoomParticipant::getParticipant).sorted().collect(toList());
     }
 
     @CommandHandler
